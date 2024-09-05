@@ -111,7 +111,7 @@ export default function BirthdayWish() {
                                              </motion.div>
                                         ) : (
                                                 <FaBirthdayCake
-                                                className={'w-8 h-8 text-gray-300 transition-colors duration-300 ease-in-out cursor-pointer hover:scale-110'}
+                                                className={'w-8 h-8 text-gray-500 transition-colors duration-300 ease-in-out cursor-pointer hover:scale-110'}
                                                 onClick={() => lightCandle(index)}
                                                 />
                                         )}
