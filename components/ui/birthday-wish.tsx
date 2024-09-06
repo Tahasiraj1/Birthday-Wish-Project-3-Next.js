@@ -130,7 +130,7 @@ export default function BirthdayWish() {
                                      transition={{duration: 0.3}}
                                     >
                                         <GiBalloons
-                                        className={'w-8 h-8 cursor-pointer hover: scale-110'}
+                                        className={'w-8 h-8 cursor-pointer hover:scale-110'}
                                         style={{color: index < balloonsPoppedCount ? '#D1D5DB' : balloonColors[index % balloonColors.length]}}
                                         onClick={() => popBalloon(index)}
                                         />
