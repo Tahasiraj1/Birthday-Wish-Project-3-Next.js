@@ -26,6 +26,14 @@ export default function BirthdayWish() {
     const [showConfetti, setShowConfetti] = useState<boolean>(false);
     const [windowSize, setWindowSize] = useState<confettiProps>({width: 0, height: 0});
     const [celebrating, setCelebrating] = useState<boolean>(false);
+    const [userName, setUserName] = useState<string>("");
+    const [birthYear, setBirthYear] = useState<number | null>(null);
+    const [step, setStep] = useState<'enter-details' | 'celebrate'>('enter-details');
+
+    const calculateAge = (birthYear: number | null): number => {
+        const currentYear = new Date().getFullYear();
+        return currentYear - Number(birthYear);
+    };
 
     const totalCandles: number = 5;
     const totalBalloons: number = 5;
@@ -75,6 +83,10 @@ export default function BirthdayWish() {
         }, 500)
     }
 
+    const handleSetDetails = () => {
+        setStep('celebrate');
+    };
+
     
     return (
         <div className="min-h-screen flex items-center justify-center p-4 bg-gradient-to-r from-purple-300 via-pink-300 to-red-300">
@@ -84,11 +96,35 @@ export default function BirthdayWish() {
               transition={{duration: 0.5}}
               className='w-full max-w-md'
             >
-                <Card className='mx-auto overflow-hidden transition-all duration-300 ease-in-out hover:shadow-xl border-2 border-black bg-gradient-to-r from-purple-200 via-pink-200 to-red-200'>
+                {step === 'enter-details' ? (
+                                <div className='w-full max-w-md p-4 mt-4 rounded shadow-2xl bg-gradient-to-r from-purple-200 via-pink-200 to-red-200'>
+                                <h3 className='text-lg font-semibold text-black mb-4'>Enter Your Details:</h3>
+                                <input
+                                  type='text'
+                                  className='text-black w-full p-2 mb-2 border border-gray-300 rounded'
+                                  placeholder='Enter your name (e.g Taha)'
+                                  value={userName}
+                                  onChange={(e) => setUserName(e.target.value)}
+                                />
+                                <input
+                                  type='number'
+                                  className='text-black w-full p-2 mb-4 border border-gray-300 rounded'
+                                  placeholder='Enter your birth year (e.g 2004)'
+                                  onChange={(e) => setBirthYear(Number(e.target.value))}
+                                />
+                                <Button
+                                className='bg-black hover:bg-gray-700 text-white hover:bg-gray-800 transition-all duration-300 w-full'
+                                onClick={handleSetDetails}
+                                disabled={!userName || !birthYear}
+                                >
+                                    Set
+                                </Button>
+                            </div>
+                ) : (
+                    <Card className='mx-auto overflow-hidden transition-all duration-300 ease-in-out hover:shadow-xl border-2 border-black bg-gradient-to-r from-purple-200 via-pink-200 to-red-200'>
                     <CardHeader className='text-center'>
-                    <CardTitle className='text-4xl font-bold text-black'>Happy 20th Birthday!</CardTitle>
-                    <CardDescription className='text-2xl font-semibold text-gray-1000'>Taha Siraj</CardDescription>
-                    <p className='text-lg text-gray-700'>April 15th</p>
+                    <CardTitle className='text-4xl font-bold text-black'>Happy {calculateAge(birthYear)}th Birthday!</CardTitle>
+                    <CardDescription className='text-2xl font-semibold text-gray-1000'>{userName}</CardDescription>
                     </CardHeader>
                     <CardContent className='space-y-6 text-center'>
                         <div>
@@ -149,6 +185,7 @@ export default function BirthdayWish() {
                         </Button>
                     </CardFooter>
                 </Card>
+                )}
             </motion.div>
             {showConfetti && (
                 <DynamicConfetti
